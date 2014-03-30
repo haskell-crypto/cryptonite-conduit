@@ -26,6 +26,7 @@ import Data.Conduit
 import Data.Conduit.Binary (sourceFile)
 
 import Control.Monad.IO.Class (MonadIO, liftIO)
+import Control.Monad.Trans.Resource (runResourceT)
 
 -- | A 'Sink' that hashes a stream of 'B.ByteString'@s@ and
 -- creates a digest @d@.
