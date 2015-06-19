@@ -1,9 +1,9 @@
 Name:                cryptohash-conduit
-Version:             0.1.0
+Version:             0.2.0
 Synopsis:            cryptohash conduit
 Description:
-  Support all the @cryptohash@ package using conduits from
-  the @conduit@ package.
+  Support the former @cryptohash@ package, now using @cryptonite@,
+  using conduits from the @conduit@ package.
 License:             BSD3
 License-file:        LICENSE
 Copyright:           Vincent Hanquez <vincent@snarc.org>
@@ -23,7 +23,7 @@ Library
                    , conduit
                    , resourcet
                    , conduit-extra
-                   , cryptohash
+                   , cryptonite
                    , transformers
   ghc-options:       -Wall -fwarn-tabs
 
