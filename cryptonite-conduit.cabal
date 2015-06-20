@@ -2,8 +2,11 @@ Name:                cryptonite-conduit
 Version:             0.1
 Synopsis:            cryptonite conduit
 Description:
-  Support the former @cryptohash@ package, now using @cryptonite@,
-  using conduits from the @conduit@ package.
+  Conduit bridge for cryptonite
+  .
+  For now only provide a conduit version for hash, but
+  with contribution, this could provide cipher conduits too,
+  and probably other things.
 License:             BSD3
 License-file:        LICENSE
 Copyright:           Vincent Hanquez <vincent@snarc.org>
