@@ -1,6 +1,6 @@
-Name:                cryptohash-conduit
-Version:             0.2.0
-Synopsis:            cryptohash conduit
+Name:                cryptonite-conduit
+Version:             0.1
+Synopsis:            cryptonite conduit
 Description:
   Support the former @cryptohash@ package, now using @cryptonite@,
   using conduits from the @conduit@ package.
@@ -12,7 +12,7 @@ Maintainer:          vincent@snarc.org
 Category:            Cryptography, Conduit
 Stability:           experimental
 Build-Type:          Simple
-Homepage:            http://github.com/vincenthz/hs-cryptohash-conduit
+Homepage:            https://github.com/haskell-crypto/cryptonite-conduit
 Cabal-Version:       >=1.8
 Extra-source-files:  README.md
 
@@ -29,4 +29,4 @@ Library
 
 source-repository head
   type: git
-  location: git://github.com/vincenthz/hs-cryptohash-conduit
+  location: https://github.com/haskell-crypto/cryptonite-conduit
