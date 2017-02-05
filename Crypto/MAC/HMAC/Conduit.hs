@@ -1,6 +1,6 @@
 {-# LANGUAGE RankNTypes, BangPatterns #-}
 -- |
--- Module      : Crypto.HMAC.Conduit
+-- Module      : Crypto.MAC.HMAC.Conduit
 -- License     : BSD-style
 -- Maintainer  : Vincent Hanquez <vincent@snarc.org>
 -- Stability   : experimental
@@ -8,7 +8,7 @@
 --
 -- A module containing Conduit facilities for hmac based functions.
 --
-module Crypto.HMAC.Conduit
+module Crypto.MAC.HMAC.Conduit
     ( -- * Cryptographic hash functions
       sinkHMAC
     ) where
