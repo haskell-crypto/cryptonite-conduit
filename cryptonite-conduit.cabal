@@ -30,7 +30,24 @@ Library
                    , memory
                    , resourcet
                    , transformers
+  if impl(ghc < 7.10)
+    Build-depends:     void
   ghc-options:       -Wall -fwarn-tabs
+
+test-suite cryptonite-conduit-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , bytestring
+                     , conduit
+                     , conduit-combinators
+                     , cryptonite
+                     , cryptonite-conduit
+                     , memory
+                     , tasty
+                     , tasty-hunit
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -W -Wall
 
 source-repository head
   type: git
