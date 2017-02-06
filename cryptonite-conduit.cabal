@@ -30,8 +30,6 @@ Library
                    , memory
                    , resourcet
                    , transformers
-  if impl(ghc < 7.10)
-    Build-depends:     void
   ghc-options:       -Wall -fwarn-tabs
 
 test-suite cryptonite-conduit-test

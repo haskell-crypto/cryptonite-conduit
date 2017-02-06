@@ -17,12 +17,11 @@ import Crypto.Hash
 import Crypto.MAC.HMAC
 import Data.ByteArray
 import Data.Conduit
-import Data.Void
 import qualified Data.ByteString as BS
 
 -- | A 'Sink' that calculates HMAC of a stream of 'B.ByteString'@s@ and
 -- returns digest @d@.
-sinkHMAC :: (Monad m, ByteArrayAccess key, HashAlgorithm hash) => key -> ConduitM BS.ByteString Void m (HMAC hash)
+sinkHMAC :: (Monad m, ByteArrayAccess key, HashAlgorithm hash) => key -> ConduitM BS.ByteString o m (HMAC hash)
 sinkHMAC key = sink (initialize key)
   where sink ctx = do
             b <- await
