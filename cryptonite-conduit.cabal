@@ -17,7 +17,7 @@ Stability:           experimental
 Build-Type:          Simple
 Homepage:            https://github.com/haskell-crypto/cryptonite-conduit
 Cabal-Version:       >=1.8
-Extra-source-files:  README.md ChangeLog.md
+Extra-source-files:  README.md CHANGELOG.md
 
 Library
   Exposed-modules:   Crypto.Cipher.ChaChaPoly1305.Conduit
