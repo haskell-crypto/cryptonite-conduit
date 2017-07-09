@@ -28,12 +28,14 @@ getNonceKey shared =
       (key, _) = ChaCha.generateSimple state2 32
    in (nonce, key)
 
-proxy :: Proxy ECC.Curve_P256R1
+type Curve = ECC.Curve_P256R1
+
+proxy :: Proxy Curve
 proxy = Proxy
 
 encrypt
   :: (MonadThrow m, MonadRandom m)
-  => ECC.Point ECC.Curve_P256R1
+  => ECC.Point Curve
   -> ConduitM ByteString ByteString m ()
 encrypt point = do
   (point', shared) <- lift $ deriveEncrypt proxy point
@@ -43,7 +45,7 @@ encrypt point = do
 
 decrypt
   :: (MonadThrow m)
-  => ECC.Scalar ECC.Curve_P256R1
+  => ECC.Scalar Curve
   -> ConduitM ByteString ByteString m ()
 decrypt scalar = do
   pointBS <- fmap BL.toStrict $ CB.take 65 -- magic value, known size of point
