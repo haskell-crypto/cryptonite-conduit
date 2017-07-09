@@ -19,8 +19,7 @@ import qualified Data.Conduit.Binary          as CB
 import           Data.Typeable                (Typeable)
 
 cf :: MonadThrow m
-   => (CE.CryptoError
-   -> ChaChaException)
+   => (CE.CryptoError -> ChaChaException)
    -> CE.CryptoFailable a
    -> m a
 cf _ (CE.CryptoPassed x) = return x
