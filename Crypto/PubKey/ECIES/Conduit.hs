@@ -20,6 +20,7 @@ import qualified Data.ByteString.Lazy                 as BL
 import           Data.Conduit                         (ConduitM, yield)
 import qualified Data.Conduit.Binary                  as CB
 import           Data.Proxy                           (Proxy (..))
+import           System.IO.Unsafe                     (unsafePerformIO)
 
 getNonceKey :: ECC.SharedSecret -> (ByteString, ByteString)
 getNonceKey shared =
@@ -32,6 +33,12 @@ type Curve = ECC.Curve_P256R1
 
 proxy :: Proxy Curve
 proxy = Proxy
+
+pointBinarySize :: Int
+pointBinarySize = B.length $ ECC.encodePoint proxy point
+  where
+    point = unsafePerformIO (ECC.keypairGetPublic <$> ECC.curveGenerateKeyPair proxy)
+{-# NOINLINE pointBinarySize #-}
 
 encrypt
   :: (MonadThrow m, MonadRandom m)
@@ -48,7 +55,7 @@ decrypt
   => ECC.Scalar Curve
   -> ConduitM ByteString ByteString m ()
 decrypt scalar = do
-  pointBS <- fmap BL.toStrict $ CB.take 65 -- magic value, known size of point
+  pointBS <- fmap BL.toStrict $ CB.take pointBinarySize
   point <-
     case ECC.decodePoint proxy pointBS of
       CE.CryptoPassed point -> return point
