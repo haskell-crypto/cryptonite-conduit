@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module Crypto.PubKey.ECIES.Conduit
   ( encrypt
   , decrypt
@@ -40,15 +41,26 @@ pointBinarySize = B.length $ ECC.encodePoint proxy point
     point = unsafePerformIO (ECC.keypairGetPublic <$> ECC.curveGenerateKeyPair proxy)
 {-# NOINLINE pointBinarySize #-}
 
+throwOnFail :: MonadThrow m => CE.CryptoFailable a -> m a
+throwOnFail (CE.CryptoPassed a) = pure a
+throwOnFail (CE.CryptoFailed e) = throwM e
+
+
 encrypt
   :: (MonadThrow m, MonadRandom m)
   => ECC.Point Curve
   -> ConduitM ByteString ByteString m ()
 encrypt point = do
-  (point', shared) <- lift $ deriveEncrypt proxy point
+  (point', shared) <- lift (deriveEncryptCompat proxy point) >>= throwOnFail
   let (nonce, key) = getNonceKey shared
   yield $ ECC.encodePoint proxy point'
   ChaCha.encrypt nonce key
+  where
+#if MIN_VERSION_cryptonite(0,23,999)
+    deriveEncryptCompat prx p = deriveEncrypt prx p
+#else
+    deriveEncryptCompat prx p = CE.CryptoPassed <$> deriveEncrypt prx p
+#endif
 
 decrypt
   :: (MonadThrow m)
@@ -56,10 +68,13 @@ decrypt
   -> ConduitM ByteString ByteString m ()
 decrypt scalar = do
   pointBS <- fmap BL.toStrict $ CB.take pointBinarySize
-  point <-
-    case ECC.decodePoint proxy pointBS of
-      CE.CryptoPassed point -> return point
-      CE.CryptoFailed e -> throwM e
-  let shared = deriveDecrypt proxy point scalar
-      (_nonce, key) = getNonceKey shared
+  point   <- throwOnFail (ECC.decodePoint proxy pointBS)
+  shared  <- throwOnFail (deriveDecryptCompat proxy point scalar)
+  let (_nonce, key) = getNonceKey shared
   ChaCha.decrypt key
+  where
+#if MIN_VERSION_cryptonite(0,23,999)
+    deriveDecryptCompat prx p s = deriveDecrypt prx p s
+#else
+    deriveDecryptCompat prx p s = CE.CryptoPassed (deriveDecrypt prx p s)
+#endif
