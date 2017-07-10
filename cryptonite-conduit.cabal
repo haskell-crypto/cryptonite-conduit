@@ -1,5 +1,5 @@
 Name:                cryptonite-conduit
-Version:             0.2.1
+Version:             0.2.0
 Synopsis:            cryptonite conduit
 Description:
   Conduit bridge for cryptonite
