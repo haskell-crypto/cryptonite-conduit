@@ -21,6 +21,7 @@ Extra-source-files:  README.md CHANGELOG.md
 
 Library
   Exposed-modules:   Crypto.Cipher.ChaChaPoly1305.Conduit
+                     Crypto.Cipher.Conduit
                      Crypto.MAC.HMAC.Conduit
                      Crypto.Hash.Conduit
                      Crypto.PubKey.ECIES.Conduit
@@ -31,6 +32,7 @@ Library
                    , cryptonite
                    , exceptions
                    , memory
+                   , mono-traversable
                    , resourcet
                    , transformers
   ghc-options:       -Wall -fwarn-tabs
